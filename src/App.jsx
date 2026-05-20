@@ -1,47 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import AnimeDetails from "./pages/AnimeDetails"
 
 function App() {
-
-  const [characters, setCharacters] = useState([])
-
-  useEffect(() => {
-
-    fetch("https://api.jikan.moe/v4/anime/20/characters")
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacters(data.data)
-      })
-
-  }, [])
-
   return (
-    <div className="container">
 
-      <h1 className="title">Anime Characters</h1>
+    <BrowserRouter basename="/Anime-gallery">
 
-      <div className="card-container">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/anime/:id" element={<AnimeDetails />} />
+      </Routes>
 
-        {
-          characters.map((item) => (
-            <div className="card" key={item.character.mal_id}>
+    </BrowserRouter>
 
-              <img
-                src={item.character.images.jpg.image_url}
-                alt=""
-              />
-
-              <h2>{item.character.name}</h2>
-
-              <p>{item.role}</p>
-
-            </div>
-          ))
-        }
-
-      </div>
-
-    </div>
   )
 }
 
